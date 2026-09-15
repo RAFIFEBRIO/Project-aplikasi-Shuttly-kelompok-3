@@ -12,13 +12,7 @@ class SeatData {
 }
 
 class PilihKursiPage extends StatefulWidget {
-  // ============================================================
-  // DATA DARI HALAMAN VEHICLE SELECTION
-  //
-  // Semua parameter diberi nilai default supaya halaman ini tetap
-  // bisa dibuka langsung (mis. saat development/testing) tanpa
-  // harus selalu mengirim data dari halaman sebelumnya.
-  // ============================================================
+
 
   final String originCity;
   final String destinationCity;
@@ -46,8 +40,7 @@ class PilihKursiPage extends StatefulWidget {
 }
 
 class _PilihKursiPageState extends State<PilihKursiPage> {
-  // Data kursi sesuai layout pada gambar
-  // Status awal: kursi 2 & 7 = terisi, sisanya tersedia (bisa dipilih user)
+  
   final Map<String, SeatStatus> _seatStatus = {
     '1': SeatStatus.tersedia,
     '4': SeatStatus.tersedia,
@@ -61,8 +54,7 @@ class _PilihKursiPageState extends State<PilihKursiPage> {
     '8': SeatStatus.tersedia,
   };
 
-  // Menyimpan label kursi yang sedang di-hover kursor (untuk animasi
-  // warna merah saat kursor mendekat ke kursi yang masih tersedia).
+
   String? _hoveredSeat;
 
   static const Color pinkColor = Color(0xFFE38B8B);
@@ -123,14 +115,7 @@ class _PilihKursiPageState extends State<PilihKursiPage> {
     }
   }
 
-  // ============================================================
-  // WARNA KOTAK & TEKS SAAT HOVER
-  //
-  // Hanya kursi berstatus "tersedia" yang bereaksi terhadap hover.
-  // Saat kursor mendekat, warna kotak berubah menjadi merah (sama
-  // seperti warna "dipilih") dan teksnya jadi putih agar tetap
-  // terbaca — transisinya dianimasikan lewat AnimatedContainer.
-  // ============================================================
+
   bool _isHovering(String label, SeatStatus status) {
     return status == SeatStatus.tersedia && _hoveredSeat == label;
   }
@@ -167,15 +152,7 @@ class _PilihKursiPageState extends State<PilihKursiPage> {
       body: SingleChildScrollView(
         child: Center(
           child: ConstrainedBox(
-            // ============================================================
-            // BATAS LEBAR KONTEN
-            //
-            // Di HP, lebar layar biasanya < 420, jadi ConstrainedBox ini
-            // tidak berpengaruh (tampilan tetap full-width seperti biasa).
-            // Di tablet/desktop, lebar layar dibatasi maksimal 420 dan
-            // otomatis berada di tengah, sehingga denah kursi tidak
-            // "meregang" mengikuti lebar layar yang sangat lebar.
-            // ============================================================
+
             constraints: const BoxConstraints(maxWidth: 420),
             child: Padding(
               padding: const EdgeInsets.all(16),
@@ -198,7 +175,7 @@ class _PilihKursiPageState extends State<PilihKursiPage> {
     );
   }
 
-  // Kartu info trip (Surabaya -> Malang, harga, armada, jadwal)
+
   Widget _buildTripInfoCard() {
     return Container(
       width: double.infinity,
@@ -248,7 +225,6 @@ class _PilihKursiPageState extends State<PilihKursiPage> {
     );
   }
 
-  // Baris legenda: Tersedia, Dipilih, Terisi
   Widget _buildLegend() {
     Widget legendItem(Color color, String label, {bool outline = false}) {
       return Row(
@@ -279,18 +255,7 @@ class _PilihKursiPageState extends State<PilihKursiPage> {
     );
   }
 
-  // ============================================================
-  // Denah kursi lengkap
-  //
-  // Denah dibentuk dari 3 KOLOM yang konsisten di setiap baris:
-  // Kolom 1: 1, 4, 7, 10
-  // Kolom 2: (kosong), 3, 6, 9
-  // Kolom 3: DRIVER, 2, 5, 8
-  //
-  // Setiap kolom memakai Expanded + Center, sehingga lebarnya
-  // selalu sama rata dan seatnya selalu sejajar vertikal, baik di
-  // layar HP yang sempit maupun layar desktop yang lebar.
-  // ============================================================
+
   Widget _buildSeatMap() {
     return Container(
       width: double.infinity,
@@ -324,8 +289,7 @@ class _PilihKursiPageState extends State<PilihKursiPage> {
     );
   }
 
-  // Satu baris grid berisi 3 kolom dengan lebar sama rata,
-  // masing-masing kontennya diletakkan di tengah kolomnya.
+
   Widget _seatRow(Widget col1, Widget col2, Widget col3) {
     return Row(
       children: [
@@ -435,12 +399,7 @@ class _PilihKursiPageState extends State<PilihKursiPage> {
       ..sort((a, b) => int.parse(a).compareTo(int.parse(b)));
   }
 
-  // ============================================================
-  // TOMBOL LANJUTKAN
-  //
-  // Ditempatkan di bawah kotak Bagasi. Sebelum lanjut, dicek dulu
-  // apakah user sudah memilih minimal 1 kursi.
-  // ============================================================
+
   Widget _buildLanjutkanButton() {
     return SizedBox(
       width: double.infinity,
@@ -458,13 +417,7 @@ class _PilihKursiPageState extends State<PilihKursiPage> {
             return;
           }
 
-          // ============================================================
-          // Pakai Navigator.push (bukan pushReplacement) supaya halaman
-          // Pilih Kursi ini TETAP ada di tumpukan navigasi. Efeknya: saat
-          // tombol "kembali" di halaman Pembayaran ditekan, aplikasi akan
-          // kembali ke halaman Pilih Kursi ini (bukan langsung lompat ke
-          // halaman lain).
-          // ============================================================
+
           Navigator.push(
             context,
             MaterialPageRoute(
