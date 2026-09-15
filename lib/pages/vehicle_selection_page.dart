@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'pilih_kursi_page.dart';
 
-// ================================================================
-// MODEL
-// ================================================================
+
 
 class VehicleOption {
   final String name;
@@ -24,9 +22,7 @@ class VehicleOption {
   });
 }
 
-// ================================================================
-// PAGE
-// ================================================================
+
 
 class VehicleSelectionPage extends StatefulWidget {
   final String originCity; // contoh: 'Malang'
@@ -49,20 +45,12 @@ class VehicleSelectionPage extends StatefulWidget {
 
 class _VehicleSelectionPageState
     extends State<VehicleSelectionPage> {
-  // ============================================================
-  // CONSTANT
-  // ============================================================
+
 
   static const Color primaryBlue = Color(0xFF1769C2);
   static const Color backgroundColor = Color(0xFFF5F7FA);
 
-  // ============================================================
-  // DUMMY DATA
-  //
-  // Ganti / hubungkan ke data asli (API, database, dll) sesuai
-  // kebutuhan. Struktur data disamakan dengan yang ada di gambar
-  // contoh: nama kendaraan, harga per pax, jam berangkat & tiba.
-  // ============================================================
+
 
   final List<VehicleOption> _vehicles = const [
     VehicleOption(
@@ -99,32 +87,17 @@ class _VehicleSelectionPageState
     ),
   ];
 
-  // ============================================================
-  // SELECTED CARD
-  //
-  // Menyimpan index kendaraan yang sedang dipilih/di-tap, supaya
-  // card-nya bisa ditandai dengan border biru seperti pada contoh
-  // gambar (card "Alphard Deluxe" yang di-highlight).
-  // ============================================================
+
 
   int? _selectedIndex;
 
-  // ============================================================
-  // RESPONSIVE BREAKPOINT
-  // ============================================================
+
 
   bool _isXs(double width) => width < 360;
   bool _isTablet(double width) => width >= 600 && width < 1000;
   bool _isDesktop(double width) => width >= 1000;
 
-  // ============================================================
-  // AKSI SAAT KARTU KENDARAAN DITEKAN
-  //
-  // - Kartu tetap ditandai terpilih (border biru) seperti semula.
-  // - Khusus kendaraan HiAce, otomatis membuka halaman Pilih Kursi.
-  //   Data rute & jadwal dikirim ke halaman tersebut supaya kartu
-  //   info di atasnya sesuai dengan kendaraan yang dipilih.
-  // ============================================================
+
 
   void _onVehicleTap(int index, VehicleOption vehicle) {
     setState(() {
@@ -150,9 +123,7 @@ class _VehicleSelectionPageState
     }
   }
 
-  // ============================================================
-  // FORMAT HARGA
-  // ============================================================
+
 
   String _formatPrice(int price) {
     final String raw = price.toString();
@@ -171,9 +142,7 @@ class _VehicleSelectionPageState
     return 'Rp ${buffer.toString()}';
   }
 
-  // ============================================================
-  // BUILD
-  // ============================================================
+
 
   @override
   Widget build(BuildContext context) {
@@ -188,15 +157,11 @@ class _VehicleSelectionPageState
             return Column(
               children: [
 
-                // ==========================================
-                // TOP BAR (back + rute)
-                // ==========================================
+
 
                 _buildTopBar(width),
 
-                // ==========================================
-                // LIST KENDARAAN
-                // ==========================================
+
 
                 Expanded(
                   child: Center(
@@ -246,9 +211,7 @@ class _VehicleSelectionPageState
     );
   }
 
-  // ============================================================
-  // TOP BAR
-  // ============================================================
+
 
   Widget _buildTopBar(double width) {
     final bool desktop = _isDesktop(width);
@@ -275,9 +238,7 @@ class _VehicleSelectionPageState
       child: Row(
         children: [
 
-          // ==========================================
-          // BACK BUTTON
-          // ==========================================
+
 
           InkWell(
             borderRadius: BorderRadius.circular(20),
@@ -297,9 +258,7 @@ class _VehicleSelectionPageState
             ),
           ),
 
-          // ==========================================
-          // RUTE (asal -> tujuan)
-          // ==========================================
+
 
           Expanded(
             child: Center(
@@ -336,10 +295,7 @@ class _VehicleSelectionPageState
             ),
           ),
 
-          // ==========================================
-          // SPACER supaya rute tetap center walau ada
-          // back button di kiri (lebar disamakan)
-          // ==========================================
+
 
           SizedBox(
             width: desktop ? 36 : 33,
@@ -386,9 +342,7 @@ class _VehicleSelectionPageState
     );
   }
 
-  // ============================================================
-  // VEHICLE CARD
-  // ============================================================
+
 
   Widget _buildVehicleCard(
     VehicleOption vehicle,
@@ -415,14 +369,7 @@ class _VehicleSelectionPageState
             desktop ? 16 : 14,
           ),
 
-          // ==================================================
-          // BORDER SELEKSI
-          //
-          // Card yang sedang dipilih ditandai dengan border biru
-          // (2px), persis seperti card "Alphard Deluxe" pada
-          // contoh gambar. Card lain tetap tanpa border (transparan)
-          // supaya ukurannya tidak "loncat" saat berpindah pilihan.
-          // ==================================================
+
 
           border: Border.all(
             color: isSelected
@@ -445,22 +392,14 @@ class _VehicleSelectionPageState
 
           children: [
 
-          // ======================================================
-          // FOTO + NAMA + HARGA
-          // ======================================================
+
 
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
 
             children: [
 
-              // ==================================================
-              // FOTO KENDARAAN
-              //
-              // Dibungkus Container dengan background abu muda +
-              // ukuran tetap, supaya framing foto konsisten walau
-              // rasio/latar foto asli tiap kendaraan beda-beda.
-              // ==================================================
+
 
               Container(
                 width: desktop ? 130 : 108,
@@ -500,9 +439,7 @@ class _VehicleSelectionPageState
 
               SizedBox(width: desktop ? 14 : 10),
 
-              // ==================================================
-              // NAMA + HARGA
-              // ==================================================
+
 
               Expanded(
                 child: Column(
@@ -545,9 +482,7 @@ class _VehicleSelectionPageState
 
                     SizedBox(height: desktop ? 8 : 6),
 
-                    // ======================================
-                    // KURSI TERSEDIA
-                    // ======================================
+
 
                     Row(
                       mainAxisSize: MainAxisSize.min,
@@ -592,28 +527,14 @@ class _VehicleSelectionPageState
 
           SizedBox(height: desktop ? 12 : 10),
 
-          // ======================================================
-          // JAM BERANGKAT/TIBA + TOMBOL DETAIL
-          // ======================================================
+
 
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
 
             children: [
 
-              // ==================================================
-              // GRUP JAM (berangkat — Sampai — tiba)
-              //
-              // Digabung dalam satu Row dengan mainAxisSize.min
-              // supaya menempel rapat di kiri, tidak melebar dan
-              // membuat teks "Sampai" jadi renggang di layar lebar.
-              //
-              // CATATAN: sesuai contoh gambar, kota yang muncul di
-              // bawah jam berangkat adalah kota TUJUAN (destination),
-              // dan di bawah jam tiba adalah kota ASAL (origin) —
-              // urutan ini memang terbalik dari header rute, tapi
-              // disamakan persis dengan gambar referensi.
-              // ==================================================
+
 
               Row(
                 mainAxisSize: MainAxisSize.min,
@@ -660,22 +581,15 @@ class _VehicleSelectionPageState
                 ],
               ),
 
-              // ==================================================
-              // Spacer mendorong tombol Detail ke ujung kanan,
-              // berapa pun lebar card-nya.
-              // ==================================================
+
 
               const Spacer(),
 
-              // ==================================================
-              // TOMBOL DETAIL
-              // ==================================================
+
 
               ElevatedButton(
                 onPressed: () {
-                  // ==========================================
-                  // AKSI LIHAT DETAIL KENDARAAN
-                  // ==========================================
+               
 
                   // Contoh:
                   //
