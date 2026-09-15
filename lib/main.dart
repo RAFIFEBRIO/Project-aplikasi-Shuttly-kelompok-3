@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Arial',
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2F6BFF)),
       ),
-      // Splash screen tampil dulu, baru otomatis pindah ke LoginPage
+      
       home: const SplashScreen(nextPage: LoginPage()),
     );
   }
