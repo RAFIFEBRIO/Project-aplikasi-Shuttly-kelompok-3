@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'login_page.dart';
 
 class SplashScreen extends StatefulWidget {
-  // Halaman yang dibuka otomatis setelah splash selesai.
-  // Default-nya LoginPage, tapi bisa diganti kalau perlu.
+
   final Widget nextPage;
 
   const SplashScreen({super.key, this.nextPage = const LoginPage()});
@@ -15,7 +14,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
-  // Warna biru khas latar splash screen
+ 
   static const Color splashBlue = Color(0xFF0D5CFF);
   static const Color logoYellow = Color(0xFFFFC42D);
 
@@ -33,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(milliseconds: 1400),
     );
 
-    // Logo muncul dengan efek fade + zoom (scale) dari kecil ke normal
+    
     _logoFade = CurvedAnimation(
       parent: _controller,
       curve: const Interval(0.0, 0.6, curve: Curves.easeIn),
@@ -93,7 +92,7 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
 
-            // Teks copyright di bagian bawah
+            
             Positioned(
               left: 0,
               right: 0,
@@ -109,14 +108,7 @@ class _SplashScreenState extends State<SplashScreen>
     );
   }
 
-  // ============================================================
-  // LOGO
-  //
-  // Kalau kamu sudah punya file logo asli (mis. hasil export dari
-  // Figma/Canva), simpan sebagai gambar dan pakai Image.asset di
-  // sini supaya hasilnya identik dengan desain kamu. Kalau belum,
-  // fallback di bawah ini akan dipakai (ikon pin + teks "Shuttly").
-  // ============================================================
+
   Widget _buildLogo() {
     return Image.asset(
       'assets/images/logo_shuttly.png',
@@ -157,9 +149,7 @@ class _SplashScreenState extends State<SplashScreen>
     );
   }
 
-  // ============================================================
-  // FOOTER COPYRIGHT
-  // ============================================================
+
   Widget _buildFooter() {
     return const Column(
       children: [
