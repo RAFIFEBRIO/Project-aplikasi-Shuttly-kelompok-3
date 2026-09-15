@@ -12,18 +12,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // ============================================================
-  // CONSTANT
-  // ============================================================
+
 
   static const Color primaryBlue = Color(0xFF1769C2);
   static const Color backgroundColor = Color(0xFFF5F7FA);
 
   int _currentIndex = 0;
 
-  // ============================================================
-  // DAFTAR KOTA (untuk form Keberangkatan / Tujuan)
-  // ============================================================
+
 
   static const List<_CityOption> _cityOptions = [
     _CityOption(city: 'Surabaya', code: 'SBY', point: 'Pool Pusat'),
@@ -36,11 +32,11 @@ class _HomePageState extends State<HomePage> {
     _CityOption(city: 'Banyuwangi', code: 'BWI', point: 'Drop Point'),
   ];
 
-  // Kota yang sedang dipilih di form (default: sesuai desain awal)
-  _CityOption _origin = _cityOptions[0]; // Surabaya (Pool Pusat)
-  _CityOption _destination = _cityOptions[1]; // Malang (Drop Point)
+  
+  _CityOption _origin = _cityOptions[0]; 
+  _CityOption _destination = _cityOptions[1]; 
 
-  // Tanggal & jumlah penumpang yang sedang dipilih di form
+  
   DateTime _departureDate = DateTime.now();
   int _passengerCount = 1;
 
@@ -52,24 +48,14 @@ class _HomePageState extends State<HomePage> {
     return '${_departureDate.day} ${bulan[_departureDate.month - 1]} ${_departureDate.year}';
   }
 
-  // ============================================================
-  // RESPONSIVE BREAKPOINT
-  //
-  // Semua breakpoint sekarang dihitung dari `width` yang berasal
-  // dari LayoutBuilder (bukan MediaQuery), supaya ukurannya selalu
-  // konsisten dengan ruang yang benar-benar tersedia untuk widget
-  // ini — baik saat dijalankan full-screen maupun saat halaman ini
-  // ditempel di dalam layout lain (mis. side panel di desktop).
-  // ============================================================
+
 
   bool _isXs(double width) => width < 360; // HP kecil
   bool _isMobile(double width) => width < 600;
   bool _isTablet(double width) => width >= 600 && width < 1000;
   bool _isDesktop(double width) => width >= 1000;
 
-  // ============================================================
-  // BUILD
-  // ============================================================
+
 
   @override
   Widget build(BuildContext context) {
@@ -83,25 +69,7 @@ class _HomePageState extends State<HomePage> {
           builder: (context, constraints) {
             final double width = constraints.maxWidth;
 
-            // ==================================================
-            // PENTING:
-            //
-            // Header dan konten (search card + promo) sengaja
-            // digabung dalam SATU widget scroll (SingleChildScrollView
-            // + Column), BUKAN CustomScrollView dengan beberapa
-            // SliverToBoxAdapter terpisah.
-            //
-            // Alasannya: setiap sliver punya batas gambar
-            // (paint extent) sendiri. Kalau search card di-
-            // Transform.translate naik untuk overlap ke header,
-            // dan header/card ada di sliver yang berbeda, bagian
-            // yang naik itu akan TERPOTONG di batas sliver
-            // (bukan malah ketiban gambar header) — inilah yang
-            // menyebabkan label "KEBERANGKATAN" hilang padahal
-            // gambar van tetap utuh. Dengan satu Column biasa,
-            // overlap-nya aman karena semuanya berada dalam satu
-            // area gambar yang sama.
-            // ==================================================
+
 
             return SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
@@ -109,19 +77,7 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
 
-                  // ==============================================
-                  // HEADER + SEARCH CARD
-                  //
-                  // Search card memang dibuat overlap ke header.
-                  // Masalah sebelumnya: bagian card yang berada di luar
-                  // ukuran Stack tidak ikut menerima hit-test Flutter,
-                  // sehingga TGL. BERANGKAT, PENUMPANG, dan tombol CARI
-                  // terlihat tetapi sulit/tidak bisa ditekan.
-                  //
-                  // Solusi: Stack sekarang diberi tinggi sampai ke bagian
-                  // bawah search card. Jadi seluruh area visual card
-                  // berada di dalam area hit-test yang sama.
-                  // ==============================================
+
 
                   SizedBox(
                     height: _headerHeight(width) +
@@ -157,9 +113,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
 
-                  // ==============================================
-                  // CONTENT
-                  // ==============================================
+
 
                   Center(
                     child: ConstrainedBox(
@@ -178,27 +132,12 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           children: [
 
-                            // ========================================
-                            // SPACER TAK TERLIHAT
-                            //
-                            // Search card sekarang berada di dalam
-                            // Stack di atas (bukan lagi di sini), jadi
-                            // butuh "pengganjal" tak terlihat sebesar
-                            // search card supaya konten di bawahnya
-                            // (promo) tidak ketiban/ketutupan tumpukan
-                            // search card yang menumpuk ke header.
-                            // ========================================
-
-                            // Search card sudah masuk ke dalam tinggi
-                            // Stack di atas, sehingga spacer yang dibutuhkan
-                            // di sini cukup sebesar bagian overlap-nya.
+                            
                             SizedBox(
                               height: _searchCardOverlap(width),
                             ),
 
-                            // ========================================
-                            // PROMO
-                            // ========================================
+                            
 
                             Transform.translate(
                               offset: Offset(
@@ -226,21 +165,13 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
 
-      // ==========================================================
-      // BOTTOM NAVIGATION
-      // ==========================================================
+
 
       bottomNavigationBar: _buildBottomNavigation(),
     );
   }
 
-  // ============================================================
-  // TINGGI HEADER
-  //
-  // Diekstrak jadi method terpisah (dipakai baik oleh _buildHeader
-  // maupun oleh build() untuk menghitung posisi search card),
-  // supaya nilainya selalu konsisten di kedua tempat.
-  // ============================================================
+  
   double _headerHeight(double width) {
     if (width >= 1400) {
       return 490; // Monitor besar
@@ -264,9 +195,7 @@ class _HomePageState extends State<HomePage> {
             : 105;
   }
 
-  // Tinggi aktual search card berdasarkan breakpoint yang sama dengan
-  // padding, row, dan tombol di dalam _buildSearchCard().
-  // Nilai ini dipakai agar seluruh area card ikut masuk hit-test Stack.
+  
   double _searchCardHeight(double width) {
     final double padding = width >= 1000
         ? 18 * 2
@@ -314,9 +243,7 @@ class _HomePageState extends State<HomePage> {
             : 85;
   }
 
-  // ============================================================
-  // HEADER
-  // ============================================================
+
 
   Widget _buildHeader(double width) {
     double headerHeight = _headerHeight(width);
@@ -330,9 +257,7 @@ class _HomePageState extends State<HomePage> {
 
         children: [
 
-          // ========================================================
-          // BACKGROUND IMAGE
-          // ========================================================
+
 
           Image.asset(
             'assets/images/header_travel.png',
@@ -357,13 +282,7 @@ class _HomePageState extends State<HomePage> {
                         -0.20,
                       ),
 
-            // ======================================================
-            // FALLBACK
-            //
-            // Kalau asset belum ada / gagal dimuat, tampilkan
-            // background gradient supaya layout tetap rapi
-            // (bukan layar error merah) baik di HP maupun desktop.
-            // ======================================================
+
 
             errorBuilder: (context, error, stackTrace) {
               return Container(
@@ -387,9 +306,7 @@ class _HomePageState extends State<HomePage> {
             },
           ),
 
-          // ========================================================
-          // DARK OVERLAY
-          // ========================================================
+
 
           Container(
             decoration: BoxDecoration(
@@ -412,15 +329,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          // ========================================================
-          // HEADER CONTENT
-          // ========================================================
-          //
-          // CATATAN: Container notifikasi (lonceng) di pojok kanan
-          // atas header SUDAH DIHAPUS sesuai permintaan. Sekarang
-          // Row hanya berisi bagian "Welcome" saja, sehingga tidak
-          // perlu ada child kedua (ikon lonceng) di sebelah kanan.
-          // ========================================================
+
 
           Center(
             child: ConstrainedBox(
@@ -443,9 +352,7 @@ class _HomePageState extends State<HomePage> {
 
                   children: [
 
-                    // ==============================================
-                    // WELCOME
-                    // ==============================================
+
 
                     Expanded(
                       child: Align(
@@ -471,13 +378,7 @@ class _HomePageState extends State<HomePage> {
                             style: TextStyle(
                               color: Colors.white,
 
-                              // ==========================================
-                              // Font diperbesar & dibuat lebih elegan:
-                              // fontFamily 'Georgia' (serif) memberi kesan
-                              // lebih premium/travel dibanding default
-                              // sans-serif, dengan letterSpacing tipis
-                              // supaya tetap enak dibaca di atas foto.
-                              // ==========================================
+
 
                               fontFamily: 'Georgia',
 
@@ -553,9 +454,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
 
-                    // ==============================================
-                    // (Ikon notifikasi/lonceng dihapus dari sini)
-                    // ==============================================
+                   
                   ],
                 ),
               ),
@@ -566,9 +465,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // ============================================================
-  // SEARCH CARD
-  // ============================================================
+
 
   Widget _buildSearchCard(double width) {
     return Container(
@@ -610,9 +507,7 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         children: [
 
-          // ========================================================
-          // FROM / TO (dengan tombol swap rute di antara keduanya)
-          // ========================================================
+
 
           _buildSwappableLocationFields(width),
 
@@ -622,9 +517,7 @@ class _HomePageState extends State<HomePage> {
                 : 10,
           ),
 
-          // ========================================================
-          // DATE + PASSENGER
-          // ========================================================
+
 
           Row(
             children: [
@@ -665,9 +558,7 @@ class _HomePageState extends State<HomePage> {
                 : 10,
           ),
 
-          // ========================================================
-          // SEARCH BUTTON
-          // ========================================================
+
 
           SizedBox(
             width: double.infinity,
@@ -682,16 +573,7 @@ class _HomePageState extends State<HomePage> {
 
             child: ElevatedButton(
               onPressed: () {
-                // ==================================================
-                // AKSI CARI MOBIL TRAVEL
-                //
-                // Berpindah ke halaman pemilihan kendaraan, membawa
-                // kota asal & tujuan yang sedang dipilih di search
-                // card ('Surabaya (Pool Pusat)' -> 'Malang (Drop
-                // Point)'). Kalau nanti KEBERANGKATAN/TUJUAN sudah
-                // dinamis (bukan teks tetap), ganti nilai di bawah
-                // ini dengan variabel state yang sesuai.
-                // ==================================================
+
 
                 Navigator.push(
                   context,
@@ -768,15 +650,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // ============================================================
-  // FROM + SWAP + TO
-  //
-  // Membungkus row Keberangkatan & Tujuan dalam satu Stack supaya
-  // tombol swap (ikon panah atas-bawah) bisa ditempel tepat di
-  // atas garis pembatas (Divider) antara kedua field, menempel di
-  // sisi kanan dekat radio button. Tap pada tombol ini akan
-  // menukar nilai KEBERANGKATAN <-> TUJUAN.
-  // ============================================================
+
 
   double _locationRowHeight(double width) {
     final bool desktop = width >= 1000;
@@ -804,9 +678,7 @@ class _HomePageState extends State<HomePage> {
       children: [
         Column(
           children: [
-            // ==================================================
-            // KEBERANGKATAN (tap untuk buka popup pilih kota)
-            // ==================================================
+
             _buildLocationRow(
               icon: Icons.location_on_outlined,
               label: 'KEBERANGKATAN',
@@ -820,9 +692,7 @@ class _HomePageState extends State<HomePage> {
               color: Color(0xFFE8E8E8),
             ),
 
-            // ==================================================
-            // TUJUAN (tap untuk buka popup pilih kota)
-            // ==================================================
+
             _buildLocationRow(
               icon: Icons.flag_outlined,
               label: 'TUJUAN',
@@ -833,9 +703,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
 
-        // ======================================================
-        // TOMBOL SWAP RUTE
-        // ======================================================
+
         Positioned(
           right: width >= 1000
               ? 4
@@ -873,9 +741,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // ============================================================
-  // LOCATION ROW
-  // ============================================================
+
+
 
   Widget _buildLocationRow({
     required IconData icon,
@@ -903,9 +770,7 @@ class _HomePageState extends State<HomePage> {
       child: Row(
         children: [
 
-          // ======================================================
-          // ICON
-          // ======================================================
+    
 
           SizedBox(
             width: desktop
@@ -931,9 +796,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          // ======================================================
-          // TEXT
-          // ======================================================
+
 
           Expanded(
             child: Column(
@@ -1002,9 +865,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          // ======================================================
-          // RADIO
-          // ======================================================
+
 
           Icon(
             Icons.radio_button_unchecked,
@@ -1027,9 +888,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // ============================================================
-  // INFO BOX
-  // ============================================================
+  
 
   Widget _buildInfoBox({
     required IconData icon,
@@ -1174,9 +1033,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // ============================================================
-  // PICK TANGGAL KEBERANGKATAN
-  // ============================================================
+  
 
   Future<void> _pickDepartureDate() async {
     final DateTime today = DateTime.now();
@@ -1209,9 +1066,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  // ============================================================
-  // PICK JUMLAH PENUMPANG
-  // ============================================================
+
 
   Future<void> _pickPassengerCount() async {
     int tempCount = _passengerCount;
@@ -1369,27 +1224,16 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // ============================================================
-  // PROMO SECTION
-  //
-  // Setiap banner promo sekarang punya judul/deskripsi singkat
-  // di bawahnya (mengikuti contoh: judul hotel/tempat tampil di
-  // bawah gambar promo, bukan di dalam gambar). Ganti teks pada
-  // parameter `title` di bawah ini sesuai promo yang sebenarnya.
-  // ============================================================
+
 
   Widget _buildPromoSection(double width) {
-    // ==========================================================
-    // DESKTOP
-    // ==========================================================
+   
 
     if (width >= 1000) {
       return Column(
         children: [
 
-          // ------------------------------------------------------
-          // PROMO UTAMA
-          // ------------------------------------------------------
+
 
           _buildPromoBanner(
             'assets/images/promo_1.png',
@@ -1401,9 +1245,7 @@ class _HomePageState extends State<HomePage> {
             height: 18,
           ),
 
-          // ------------------------------------------------------
-          // PROMO 2 + PROMO 3
-          // ------------------------------------------------------
+
 
           Row(
             crossAxisAlignment:
@@ -1436,9 +1278,7 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    // ==========================================================
-    // TABLET
-    // ==========================================================
+
 
     if (width >= 600) {
       return Column(
@@ -1482,9 +1322,7 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    // ==========================================================
-    // MOBILE
-    // ==========================================================
+
 
     return Column(
       children: [
@@ -1518,13 +1356,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // ============================================================
-  // PROMO BANNER
-  //
-  // Sekarang menerima parameter `title` yang ditampilkan sebagai
-  // deskripsi singkat di bawah gambar promo (mirip contoh: judul
-  // hotel/tempat wisata di bawah banner diskon).
-  // ============================================================
+
 
   Widget _buildPromoBanner(
     String imagePath, {
@@ -1535,13 +1367,7 @@ class _HomePageState extends State<HomePage> {
 
     final double radius = desktop ? 14 : 11;
 
-    // ==========================================================
-    // Gambar promo + judul sekarang dibungkus dalam SATU kotak
-    // (Container putih dengan border & shadow tipis), meniru
-    // contoh gambar: gambar promo di bagian atas kotak, lalu
-    // judul/deskripsi ditempel langsung di bawahnya di dalam
-    // kotak putih yang sama — bukan lagi teks lepas di luar kotak.
-    // ==========================================================
+
 
     return Container(
       width: double.infinity,
@@ -1575,10 +1401,7 @@ class _HomePageState extends State<HomePage> {
 
         children: [
 
-          // ======================================================
-          // GAMBAR PROMO (hanya sudut atas yang dibulatkan, supaya
-          // menyatu rapi dengan kotak judul di bawahnya)
-          // ======================================================
+
 
           ClipRRect(
             borderRadius: BorderRadius.only(
@@ -1586,19 +1409,7 @@ class _HomePageState extends State<HomePage> {
               topRight: Radius.circular(radius),
             ),
 
-            // ==========================================================
-            // TIDAK dipaksa ke AspectRatio tetap + BoxFit.cover lagi.
-            //
-            // Sebelumnya banner dipaksa masuk ke kotak rasio 2.75 dengan
-            // BoxFit.cover, yang artinya Flutter akan MEMOTONG gambar
-            // supaya pas — kalau rasio asli gambar promo beda, bagian
-            // penting (badge diskon, foto mobil, dll) bisa ke-crop.
-            //
-            // Sekarang gambar hanya dibatasi lebarnya (width: double.infinity)
-            // dengan fit: BoxFit.fitWidth, sehingga tingginya menyesuaikan
-            // rasio asli gambar secara otomatis — gambar tampil UTUH,
-            // tidak terpotong, di HP maupun desktop.
-            // ==========================================================
+
 
             child: Image.asset(
               imagePath,
@@ -1612,8 +1423,7 @@ class _HomePageState extends State<HomePage> {
                 error,
                 stackTrace,
               ) {
-                // Fallback tetap diberi rasio tetap supaya ada
-                // tinggi yang jelas walau asset belum ada.
+                
                 return AspectRatio(
                   aspectRatio: 2.75,
                   child: Container(
@@ -1644,10 +1454,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          // ======================================================
-          // DESKRIPSI / JUDUL PROMO (di dalam kotak yang sama,
-          // menempel tepat di bawah gambar)
-          // ======================================================
+
 
           Padding(
             padding: EdgeInsets.symmetric(
@@ -1681,13 +1488,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // ============================================================
-  // BOTTOM NAVIGATION
-  //
-  // Diganti menjadi 4 item: Beranda, Tiket Saya, Notifikasi, Akun
-  // (sebelumnya 3 item: Beranda, Ticket, Akun) mengikuti contoh
-  // gambar footer yang diberikan.
-  // ============================================================
+
 
   Widget _buildBottomNavigation() {
     return SafeArea(
@@ -1783,9 +1584,7 @@ class _HomePageState extends State<HomePage> {
 
               items: const [
 
-                // =================================================
-                // BERANDA
-                // =================================================
+
 
                 BottomNavigationBarItem(
                   icon: Icon(
@@ -1806,9 +1605,7 @@ class _HomePageState extends State<HomePage> {
                   label: 'Beranda',
                 ),
 
-                // =================================================
-                // TIKET SAYA
-                // =================================================
+
 
                 BottomNavigationBarItem(
                   icon: Icon(
@@ -1829,9 +1626,7 @@ class _HomePageState extends State<HomePage> {
                   label: 'Tiket Saya',
                 ),
 
-                // =================================================
-                // NOTIFIKASI
-                // =================================================
+
 
                 BottomNavigationBarItem(
                   icon: Icon(
@@ -1852,9 +1647,7 @@ class _HomePageState extends State<HomePage> {
                   label: 'Notifikasi',
                 ),
 
-                // =================================================
-                // AKUN
-                // =================================================
+
 
                 BottomNavigationBarItem(
                   icon: Icon(
@@ -1882,9 +1675,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // ============================================================
-  // SWAP RUTE (tukar Keberangkatan <-> Tujuan)
-  // ============================================================
+
 
   void _swapCities() {
     setState(() {
@@ -1907,13 +1698,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // ============================================================
-  // POPUP PILIH KOTA
-  //
-  // Dipanggil saat field KEBERANGKATAN atau TUJUAN di-tap.
-  // Menampilkan bottom sheet responsive berisi search box +
-  // daftar kota yang bisa dipilih.
-  // ============================================================
+
 
   Future<void> _showCityPicker({required bool isOrigin}) async {
     final _CityOption current = isOrigin ? _origin : _destination;
@@ -2108,9 +1893,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-// ============================================================
-// MODEL: OPSI KOTA
-// ============================================================
+
 
 class _CityOption {
   final String city;
