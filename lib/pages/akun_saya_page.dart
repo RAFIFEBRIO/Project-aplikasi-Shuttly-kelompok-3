@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'tiket_saya_page.dart';
 
-// ============================================================
-// DATA SATU BARIS MENU (icon, label, aksi saat ditekan)
-// ============================================================
+
 class _MenuItemData {
   final IconData icon;
   final String label;
@@ -41,8 +39,7 @@ class _AkunSayaPageState extends State<AkunSayaPage> {
   static const Color borderColor = Color(0xFFEDF0F5);
   static const Color backgroundColor = Color(0xFFF5F7FA);
 
-  // Placeholder aksi untuk menu yang belum ada halamannya.
-  // TODO: ganti dengan navigasi ke halaman sesungguhnya masing-masing.
+
   void _onMenuTap(String label) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Buka halaman "$label"')),
@@ -93,12 +90,7 @@ class _AkunSayaPageState extends State<AkunSayaPage> {
           physics: const BouncingScrollPhysics(),
           child: Center(
             child: ConstrainedBox(
-              // Dibatasi maksimal 480 dan diterapkan ke SELURUH isi
-              // halaman (header + kartu profil + menu), supaya semua
-              // bagian punya lebar yang konsisten di layar lebar
-              // (desktop) — bukan cuma bagian menu saja seperti
-              // sebelumnya, yang menyebabkan header & kartu profil
-              // melebar sendiri mengikuti lebar layar penuh.
+              
               constraints: const BoxConstraints(maxWidth: 480),
               child: Column(
                 children: [
@@ -206,9 +198,7 @@ class _AkunSayaPageState extends State<AkunSayaPage> {
     );
   }
 
-  // ============================================================
-  // HEADER (foto + tombol back + judul + kartu profil overlap)
-  // ============================================================
+ 
   Widget _buildHeaderSection() {
     return Stack(
       clipBehavior: Clip.none,
@@ -234,7 +224,7 @@ class _AkunSayaPageState extends State<AkunSayaPage> {
                   );
                 },
               ),
-              // Overlay gelap tipis supaya tulisan putih tetap terbaca
+              
               Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -369,9 +359,7 @@ class _AkunSayaPageState extends State<AkunSayaPage> {
     );
   }
 
-  // ============================================================
-  // JUDUL SETIAP BAGIAN (Aktivitas & Keamanan, dst.)
-  // ============================================================
+
   Widget _sectionLabel(String text) {
     return Text(
       text,
@@ -383,9 +371,7 @@ class _AkunSayaPageState extends State<AkunSayaPage> {
     );
   }
 
-  // ============================================================
-  // KARTU BERISI SEKUMPULAN MENU (dipisah garis tipis)
-  // ============================================================
+
   Widget _menuCard(List<_MenuItemData> items) {
     return Container(
       decoration: BoxDecoration(
@@ -442,9 +428,7 @@ class _AkunSayaPageState extends State<AkunSayaPage> {
     );
   }
 
-  // ============================================================
-  // BOTTOM NAVIGATION (item "Akun" aktif)
-  // ============================================================
+
   Widget _buildBottomNavigation() {
     return SafeArea(
       top: false,
