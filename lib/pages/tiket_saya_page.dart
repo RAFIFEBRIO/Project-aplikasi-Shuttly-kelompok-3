@@ -9,14 +9,7 @@ import 'package:printing/printing.dart';
 import 'akun_saya_page.dart';
 
 class TiketSayaPage extends StatelessWidget {
-  // ============================================================
-  // DATA TIKET
-  //
-  // Semua diberi nilai default sesuai contoh desain, supaya halaman
-  // ini tetap bisa dibuka langsung untuk keperluan development.
-  // Nantinya nilai-nilai ini bisa dikirim dari data pemesanan asli
-  // (mis. daftar riwayat tiket pengguna).
-  // ============================================================
+
 
   final String bookingCode;
   final String status;
@@ -127,9 +120,7 @@ class TiketSayaPage extends StatelessWidget {
     );
   }
 
-  // ============================================================
-  // BOTTOM NAVIGATION (item "Tiket Saya" aktif)
-  // ============================================================
+
   Widget _buildBottomNavigation(BuildContext context) {
     return SafeArea(
       top: false,
@@ -211,9 +202,7 @@ class TiketSayaPage extends StatelessWidget {
     );
   }
 
-  // ============================================================
-  // KARTU TIKET
-  // ============================================================
+
   Widget _buildTicketCard() {
     return Container(
       width: double.infinity,
@@ -449,14 +438,7 @@ class TiketSayaPage extends StatelessWidget {
     );
   }
 
-  // ============================================================
-  // TOMBOL UNDUH TIKET
-  //
-  // Men-generate PDF berisi detail tiket + QR code (QR code di PDF
-  // dibuat lewat kemampuan barcode bawaan package `pdf`, jadi tidak
-  // perlu dependency tambahan selain `pdf` & `printing` yang sudah
-  // dipakai di halaman Pembayaran Berhasil).
-  // ============================================================
+
   Widget _buildDownloadButton(BuildContext context) {
     return SizedBox(
       width: double.infinity,
