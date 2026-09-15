@@ -3,14 +3,7 @@ import 'package:flutter/material.dart';
 import 'payment_success_page.dart';
 
 class PembayaranPage extends StatefulWidget {
-  // ============================================================
-  // DATA PESANAN
-  //
-  // Dikirim dari halaman Pilih Kursi (armada, kursi yang dipilih,
-  // rute, jadwal, dan total pembayaran). Semua diberi nilai default
-  // supaya halaman ini tetap bisa dibuka langsung untuk keperluan
-  // development/testing.
-  // ============================================================
+
 
   final String vehicleImagePath;
   final String vehicleName;
@@ -43,12 +36,10 @@ class _PembayaranPageState extends State<PembayaranPage> {
   static const Color textColor = Color(0xFF6F82A5);
   static const Color borderColor = Color(0xFFE9EEF6);
 
-  // Metode pembayaran yang sedang dipilih (default: belum ada)
+
   String? _selectedMethod;
 
-  // ============================================================
-  // DATA PEMESAN & DATA PENUMPANG
-  // ============================================================
+
   String _pemesanNama = '';
   String _pemesanHp = '';
 
@@ -59,9 +50,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
   bool get _isPenumpangFilled =>
       _samaDenganPemesan || _penumpangNama.trim().isNotEmpty;
 
-  // ============================================================
-  // FORM SEDERHANA UNTUK "ISI DATA" (bottom sheet)
-  // ============================================================
+
   Future<void> _showIsiDataSheet({
     required String title,
     required String initialNama,
@@ -152,9 +141,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
     );
   }
 
-  // ============================================================
-  // FORMAT HARGA -> "Rp170.000"
-  // ============================================================
+
   String _formatPrice(int price) {
     final String raw = price.toString();
     final StringBuffer buffer = StringBuffer();
@@ -206,7 +193,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
         child: SingleChildScrollView(
           child: Center(
             child: ConstrainedBox(
-              // Dibatasi maksimal 420 supaya rapi juga di layar lebar/desktop
+              
               constraints: const BoxConstraints(maxWidth: 420),
               child: Padding(
                 padding: const EdgeInsets.all(16),
@@ -242,7 +229,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
 
                     const SizedBox(height: 20),
 
-                    // ---------------- DATA PENUMPANG ----------------
+                    
                     _sectionTitle('Data Penumpang'),
                     const SizedBox(height: 8),
                     _buildIsiDataRow(
@@ -296,7 +283,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
 
                     const SizedBox(height: 20),
 
-                    // ---------------- RINCIAN PESANAN ----------------
+                    
                     _sectionTitle('Rincian Pesanan'),
                     const SizedBox(height: 10),
                     _buildOrderInfoCard(),
@@ -321,9 +308,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
     );
   }
 
-  // ============================================================
-  // JUDUL SETIAP SEKSI (Data Pemesan / Data Penumpang / dst)
-  // ============================================================
+
   Widget _sectionTitle(String text) {
     return Text(
       text,
@@ -335,10 +320,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
     );
   }
 
-  // ============================================================
-  // BARIS "ISI DATA" (Data Pemesan / Data Penumpang)
-  // Dibungkus kotak putih dengan border + shadow tipis, sesuai desain.
-  // ============================================================
+
   Widget _buildIsiDataRow({
     required String label,
     required bool filled,
@@ -418,9 +400,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
     );
   }
 
-  // ============================================================
-  // FOTO KENDARAAN
-  // ============================================================
+
   Widget _buildVehicleImage() {
     return ClipRRect(
       borderRadius: BorderRadius.circular(16),
@@ -445,9 +425,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
     );
   }
 
-  // ============================================================
-  // KARTU INFORMASI PESANAN (Rincian Pesanan)
-  // ============================================================
+
   Widget _buildOrderInfoCard() {
     return Container(
       width: double.infinity,
@@ -619,9 +597,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
     );
   }
 
-  // ============================================================
-  // BADGE IKON METODE PEMBAYARAN
-  // ============================================================
+
   Widget _iconBadge({required IconData icon, required Color color}) {
     return Container(
       width: 30,
@@ -635,10 +611,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
     );
   }
 
-  // ============================================================
-  // KARTU BERISI SEMUA METODE PEMBAYARAN (QRIS / OVO / Transfer Bank)
-  // Digabung dalam satu kartu dengan pemisah antar baris, sesuai desain.
-  // ============================================================
+
   Widget _buildPaymentMethodsCard() {
     return Container(
       width: double.infinity,
@@ -680,9 +653,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
     );
   }
 
-  // ============================================================
-  // BARIS METODE PEMBAYARAN (satu baris di dalam kartu)
-  // ============================================================
+
   Widget _buildPaymentMethodTile({
     required String id,
     required String label,
@@ -721,9 +692,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
     );
   }
 
-  // ============================================================
-  // TOMBOL BAYAR
-  // ============================================================
+
   Widget _buildBayarButton() {
     return SizedBox(
       width: double.infinity,
@@ -797,9 +766,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
     );
   }
 
-  // ============================================================
-  // TOMBOL BATAL
-  // ============================================================
+
   Widget _buildBatalButton() {
     return SizedBox(
       width: double.infinity,
@@ -828,9 +795,7 @@ class _PembayaranPageState extends State<PembayaranPage> {
   }
 }
 
-// ============================================================
-// PAINTER GARIS PUTUS-PUTUS untuk penghubung jam berangkat-tiba
-// ============================================================
+
 class _DashedLinePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
