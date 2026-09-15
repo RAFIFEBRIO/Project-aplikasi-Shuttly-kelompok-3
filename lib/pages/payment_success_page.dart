@@ -8,13 +8,7 @@ import 'package:printing/printing.dart';
 import 'home_Page.dart';
 
 class PaymentSuccessPage extends StatelessWidget {
-  // ============================================================
-  // DATA YANG DITAMPILKAN DI STRUK
-  //
-  // Semua diberi nilai default sesuai contoh desain, supaya halaman
-  // ini tetap bisa dibuka langsung untuk keperluan development.
-  // Nantinya nilai-nilai ini dikirim dari halaman Pembayaran.
-  // ============================================================
+
 
   final String invoiceNumber;
   final String vehicleImagePath;
@@ -56,9 +50,7 @@ class PaymentSuccessPage extends StatelessWidget {
 
   int get totalPayment => ticketPrice + additionalFee;
 
-  // ============================================================
-  // FORMAT HARGA -> "Rp 170.000"
-  // ============================================================
+
   String _formatPrice(int price) {
     final String raw = price.toString();
     final StringBuffer buffer = StringBuffer();
@@ -108,9 +100,7 @@ class PaymentSuccessPage extends StatelessWidget {
     );
   }
 
-  // ============================================================
-  // KARTU ATAS: ikon sukses, judul, subjudul, tombol close (X)
-  // ============================================================
+
   Widget _buildHeaderCard(BuildContext context) {
     return ClipRRect(
       borderRadius: const BorderRadius.only(
@@ -148,12 +138,7 @@ class PaymentSuccessPage extends StatelessWidget {
               right: -4,
               child: IconButton(
                 onPressed: () {
-                  // Tombol close: keluar dari alur pemesanan dan kembali
-                  // ke halaman Beranda. pushAndRemoveUntil menghapus
-                  // semua halaman sebelumnya (vehicle selection, pilih
-                  // kursi, pembayaran, dst.) dari tumpukan navigasi,
-                  // supaya tombol back di HomePage tidak balik lagi ke
-                  // alur pemesanan yang sudah selesai.
+
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (_) => const HomePage()),
@@ -169,7 +154,7 @@ class PaymentSuccessPage extends StatelessWidget {
     );
   }
 
-  // Ikon struk/invoice dengan badge centang hijau
+ 
   Widget _buildSuccessIcon() {
     return SizedBox(
       width: 64,
@@ -198,9 +183,7 @@ class PaymentSuccessPage extends StatelessWidget {
     );
   }
 
-  // ============================================================
-  // GARIS PUTUS-PUTUS + "LUBANG" ala sobekan tiket
-  // ============================================================
+
   Widget _buildTicketNotch() {
     return SizedBox(
       height: 24,
@@ -237,10 +220,7 @@ class PaymentSuccessPage extends StatelessWidget {
     );
   }
 
-  // ============================================================
-  // KARTU BAWAH: invoice, foto kendaraan, detail perjalanan,
-  // rincian pembayaran, tombol download
-  // ============================================================
+
   Widget _buildBodyCard(BuildContext context) {
     return ClipRRect(
       borderRadius: const BorderRadius.only(
@@ -451,9 +431,7 @@ class PaymentSuccessPage extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // FittedBox membuat teks label otomatis mengecil kalau
-        // ruangnya sempit, sehingga kata "Keberangkatan" tetap
-        // utuh dalam satu baris (tidak terpotong "...").
+
         FittedBox(
           fit: BoxFit.scaleDown,
           alignment: Alignment.centerLeft,
@@ -604,16 +582,7 @@ class PaymentSuccessPage extends StatelessWidget {
     );
   }
 
-  // ============================================================
-  // PROSES DOWNLOAD PDF INVOICE
-  //
-  // 1. Bangun dokumen PDF berisi rincian pesanan & pembayaran.
-  // 2. Buka dialog simpan/bagikan lewat package `printing`
-  //    (Printing.sharePdf) — ini yang membuat tombol "download"
-  //    beneran berfungsi: di HP akan membuka share sheet (bisa
-  //    disimpan ke file/Drive/WhatsApp dll), di desktop/web akan
-  //    langsung men-download file PDF-nya.
-  // ============================================================
+  
   Future<void> _downloadInvoice(BuildContext context) async {
     try {
       final Uint8List pdfBytes = await _generateInvoicePdf();
@@ -740,9 +709,7 @@ class PaymentSuccessPage extends StatelessWidget {
   }
 }
 
-// ============================================================
-// PAINTER GARIS PUTUS-PUTUS (dipakai di beberapa tempat)
-// ============================================================
+
 class _DashedLinePainter extends CustomPainter {
   final Color color;
   const _DashedLinePainter({this.color = const Color(0xFFCBD5E1)});
